@@ -115,46 +115,46 @@ namespace Employee
                 Console.WriteLine($"Name : {emp.First_Name}");
             }
 
-            var ad = Employee.GetEmployees().OrderBy(e => e.First_Name).ThenByDescending(s=>s.Salary).ToList();
+            var ad = Employee.GetEmployees().OrderBy(e => e.First_Name).ThenByDescending(e=>e.Salary).ToList();
             foreach (var emp in ad)
             {
                 Console.WriteLine($"Name : {emp.First_Name}  Salary : {emp.Salary}");
             }
 
-            var en = Employee.GetEmployees().Select(e => e.First_Name = "John");
+            var en = Employee.GetEmployees().Where(e => e.First_Name == "John");
             foreach (var e in en)
             {
-                Console.WriteLine($"Name : {e}");
+                Console.WriteLine($"Name : {e.First_Name}");
             }
 
-            var en2 = Employee.GetEmployees().Select(e => e.First_Name == "John" || e.First_Name =="Roy");
+            var en2 = Employee.GetEmployees().Where(e => e.First_Name == "John" || e.First_Name =="Roy");
             foreach (var e in en2)
             {
-                Console.WriteLine($"Name : {e}");
+                Console.WriteLine($"Name : {e.First_Name}");
             }
 
-            var en3 = Employee.GetEmployees().Select(e => e.First_Name != "John" || e.First_Name != "Roy");
+            var en3 = Employee.GetEmployees().Where(e => e.First_Name != "John" || e.First_Name != "Roy");
             foreach (var e in en3)
             {
-                Console.WriteLine($"Name : {e}");
+                Console.WriteLine($"Name : {e.First_Name}");
             }
 
-            var en4 = Employee.GetEmployees().Select(e => e.First_Name.StartsWith("J"));
+            var en4 = Employee.GetEmployees().Where(e => e.First_Name.StartsWith("J"));
             foreach (var e in en4)
             {
-                Console.WriteLine($"Name : {e}");
+                Console.WriteLine($"Name : {e.First_Name}");
             }
 
-            var en5 = Employee.GetEmployees().Select(e => e.First_Name.Contains("o"));
+            var en5 = Employee.GetEmployees().Where(e => e.First_Name.Contains("o"));
             foreach (var e in en5)
             {
-                Console.WriteLine($"Name : {e}");
+                Console.WriteLine($"Name : {e.First_Name}");
             }
 
-            var en6 = Employee.GetEmployees().Select(e => e.First_Name.EndsWith("n"));
+            var en6 = Employee.GetEmployees().Where(e => e.First_Name.EndsWith("n"));
             foreach (var e in en6)
             {
-                Console.WriteLine($"Name : {e}");
+                Console.WriteLine($"Name : {e.First_Name}");
             }
 
             //var q = Employee.GetEmployees().Select(e => e.First_Name.StartsWith("J") && e.First_Name => String.Join("", First_Name).Take(4)));
@@ -172,11 +172,46 @@ namespace Employee
             }
 
             var sa = Employee.GetEmployees().Where(e => e.Salary >= 500000 && e.Salary <= 800000);
-            foreach (var emp in q)
+            foreach (var emp in sa)
             {
                 Console.WriteLine($"ID : {emp.Employee_Id} Name : {emp.First_Name} {emp.Last_Name} Salary : {emp.Salary} Joining Date : {emp.Joining_Date} Department : {emp.Department}");
             }
 
+            var sn = Employee.GetEmployees().Where(e=> e.First_Name == "John" || e.First_Name == "Michael");
+            foreach (var emp in sn)
+            {
+                Console.WriteLine($"ID : {emp.Employee_Id} Name : {emp.First_Name} {emp.Last_Name} Salary : {emp.Salary} Joining Date : {emp.Joining_Date} Department : {emp.Department}");
+            }
+
+            var dt = Employee.GetEmployees().Where (e=> e.Joining_Date.Year == 2013);
+            foreach (var emp in dt)
+            {
+                Console.WriteLine($"ID : {emp.Employee_Id} Name : {emp.First_Name} {emp.Last_Name} Salary : {emp.Salary} Joining Date : {emp.Joining_Date} Department : {emp.Department}");
+            }
+
+            var mn = Employee.GetEmployees().Where (e=> e.Joining_Date.Month == 01);
+            foreach (var emp in mn)
+            {
+                Console.WriteLine($"ID : {emp.Employee_Id} Name : {emp.First_Name} {emp.Last_Name} Salary : {emp.Salary} Joining Date : {emp.Joining_Date} Department : {emp.Department}");
+            }
+
+            var jmn = Employee.GetEmployees().Where (e=> e.Joining_Date < (01,01,2013));
+            foreach (var emp in jmn)
+            {
+                Console.WriteLine($"ID : {emp.Employee_Id} Name : {emp.First_Name} {emp.Last_Name} Salary : {emp.Salary} Joining Date : {emp.Joining_Date} Department : {emp.Department}");
+            }
+
+            var jmnt = Employee.GetEmployees().Where (e=> e.Joining_Date > (01,01,2013));
+            foreach (var emp in jmnt)
+            {
+                Console.WriteLine($"ID : {emp.Employee_Id} Name : {emp.First_Name} {emp.Last_Name} Salary : {emp.Salary} Joining Date : {emp.Joining_Date} Department : {emp.Department}");
+            }
+
+            var ti = Employee.GetEmployees().Select (e=> new {   Joining_Date = e.Joining_Date.Day, Joining_Time = e.Joining_Date.TimeOfDay });
+            foreach (var emp in ti)
+            {
+                Console.WriteLine($"Joining Date : {emp.Joining_Date} Time : {emp.Joining_Time}");
+            }
 
 
             Console.ReadKey();
