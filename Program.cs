@@ -278,6 +278,31 @@ namespace Employee
                 Console.WriteLine($"Minimum Salary (Department) : {emp.Min_Salary} ");
             }
 
+            var ym = Employee.GetEmployees().GroupBy(g => new {Year = g.Joining_Date.Year, Month = g.Joining_Date.Month}).Select(a=> new {No_of_Emp = a.Count()}).ToList();
+            foreach (var emp in ym)
+            {
+                Console.WriteLine($"No. of Employee : {emp.No_of_Emp}");
+            }
+
+            var tsg = Employee.GetEmployees().GroupBy(e=>e.Department).Select(a=>new {Total_Salary= a.Sum(e=>e.Salary)}).Where(a=>a.Total_Salary>800000).OrderByDescending(a=>a.Total_Salary);
+            foreach (var emp in tsg)
+            {
+                Console.WriteLine($"Total Salary  : {emp.Total_Salary}");
+            }
+
+            var ej = Employee.GetEmployees().Join(Incentive.GetIncentives(), emp=>emp.Employee_Id, inc => inc.Employee_Ref_Id,(emp,inc)=> new {First_Name= emp.First_Name, Incentive_Amount = inc.Incentive_Amount}).ToList();
+            foreach (var emp in ej)
+            {
+                Console.WriteLine($"Name : {emp.First_Name}  Incentive Amount : {emp.Incentive_Amount}");
+            }
+
+            //var eij = from emp in Employee.GetEmployees() join inc in Incentive.GetIncentives() on emp.Employee_Id equals inc.Employee_Ref_Id into EmployeeIncentive from incentive in EmployeeIncentive.DefaultIfEmpty() select new {First_Name=emp.First_Name, Incentive_Amount = inc.Incentive_Amount };
+            //foreach (var emp in eij)
+            //{
+            //    Console.WriteLine($"Name : {emp.First_Name}  Incentive Amount : {emp.Incentive_Amount}");
+            //}
+
+            
             var top = Employee.GetEmployees().OrderByDescending(e => e.Salary).Take(2).ToList();
             foreach (var emp in top)
             {
