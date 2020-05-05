@@ -195,13 +195,13 @@ namespace Employee
                 Console.WriteLine($"ID : {emp.Employee_Id} Name : {emp.First_Name} {emp.Last_Name} Salary : {emp.Salary} Joining Date : {emp.Joining_Date} Department : {emp.Department}");
             }
 
-            var jmn = Employee.GetEmployees().Where (e=> e.Joining_Date < (01,01,2013));
+            var jmn = Employee.GetEmployees().Where (e=> e.Joining_Date < new DateTime(2013,01,01));
             foreach (var emp in jmn)
             {
                 Console.WriteLine($"ID : {emp.Employee_Id} Name : {emp.First_Name} {emp.Last_Name} Salary : {emp.Salary} Joining Date : {emp.Joining_Date} Department : {emp.Department}");
             }
 
-            var jmnt = Employee.GetEmployees().Where (e=> e.Joining_Date > (01,01,2013));
+            var jmnt = Employee.GetEmployees().Where (e=> e.Joining_Date > new DateTime(2013,01,01));
             foreach (var emp in jmnt)
             {
                 Console.WriteLine($"ID : {emp.Employee_Id} Name : {emp.First_Name} {emp.Last_Name} Salary : {emp.Salary} Joining Date : {emp.Joining_Date} Department : {emp.Department}");
@@ -212,6 +212,42 @@ namespace Employee
             {
                 Console.WriteLine($"Joining Date : {emp.Joining_Date} Time : {emp.Joining_Time}");
             }
+
+
+            var mi = Employee.GetEmployees().Select (e=> new {   Joining_Date = e.Joining_Date, Joining_Time = e.Joining_Date.Millisecond });
+            foreach (var emp in mi)
+            {
+                Console.WriteLine($"Joining Date : {emp.Joining_Date} Time : {emp.Joining_Time}");
+            }
+
+            //var ij = Employee.GetEmployees().Join(Incentive.GetIncentives(), emp=>emp.Employee_Id, inc => inc.Employee_Ref_Id,(emp,inc)=> new {First_Name= emp.First_Name, Difference_Date = inc.Incentive_Date - emp.Joining_Date }).ToList();
+            //foreach (var emp in ij)
+            //{
+            //   Console.WriteLine($"Joining Date : {emp.Joining_Date} Time : {emp.Joining_Time}");
+            //}
+
+
+            //var date = DateTime.Now();
+            //Console.WriteLine(date);
+
+            var con = Employee.GetEmployees().Where(e=>e.Last_Name.Contains("%"));
+            foreach (var emp in con)
+            {
+                Console.WriteLine($"ID : {emp.Employee_Id} Name : {emp.First_Name} {emp.Last_Name} Salary : {emp.Salary} Joining Date : {emp.Joining_Date} Department : {emp.Department}");
+            }
+
+            var rep = Employee.GetEmployees().Select(e=>e.Last_Name.Replace("%"," "));
+            foreach (var emp in rep)
+            {
+                Console.WriteLine($"Name : {emp.Last_Name} ");
+            }
+
+            //var gb = Employee.GetEmployees().GroupBy(e=>e.Department).Select(a=>new {Total_Salary= a.Sum(e=>e.Salary)});
+            //foreach (var emp in gb)
+            //{
+            //    Console.WriteLine($"ID : {emp.Employee_Id} Name : {emp.First_Name} {emp.Last_Name} Salary : {emp.Salary} Joining Date : {emp.Joining_Date} Department : {emp.Department}");
+            //}
+
 
 
             Console.ReadKey();
