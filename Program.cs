@@ -239,15 +239,38 @@ namespace Employee
             var rep = Employee.GetEmployees().Select(e=>e.Last_Name.Replace("%"," "));
             foreach (var emp in rep)
             {
-                Console.WriteLine($"Name : {emp.Last_Name} ");
+                Console.WriteLine($"Name : {emp} ");
             }
 
-            //var gb = Employee.GetEmployees().GroupBy(e=>e.Department).Select(a=>new {Total_Salary= a.Sum(e=>e.Salary)});
-            //foreach (var emp in gb)
-            //{
-            //    Console.WriteLine($"ID : {emp.Employee_Id} Name : {emp.First_Name} {emp.Last_Name} Salary : {emp.Salary} Joining Date : {emp.Joining_Date} Department : {emp.Department}");
-            //}
+            var gb = Employee.GetEmployees().GroupBy(e=>e.Department).Select(a=>new {Total_Salary= a.Sum(e=>e.Salary)});
+            foreach (var emp in gb)
+            {
+                Console.WriteLine($" Salary : {emp.Total_Salary} ");
+            }
 
+            var top = Employee.GetEmployees().OrderByDescending(e => e.Salary).Take(2).ToList();
+            foreach (var emp in top)
+            {
+                Console.WriteLine($"Salary : {emp.Salary} ");
+            }
+
+            var topn = Employee.GetEmployees().OrderByDescending(e => e.Salary).Take(5).ToList();
+            foreach (var emp in topn)
+            {
+                Console.WriteLine($"Salary : {emp.Salary} ");
+            }
+
+            var top2 = Employee.GetEmployees().OrderByDescending(e => e.Salary).Skip(1).First();
+            foreach (var emp in top2)
+            {
+                Console.WriteLine($"Salary : {emp.Salary} ");
+            }
+
+            var un = Employee.GetEmployees().Select(x => x.First_Name).Union(Employee.GetEmployees().Select(y => y.Last_Name)).ToList();
+            foreach (var emp in un)
+            {
+                Console.WriteLine($"Name : {emp} ");
+            }
 
 
             Console.ReadKey();
