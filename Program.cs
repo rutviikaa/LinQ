@@ -245,32 +245,78 @@ namespace Employee
             var gb = Employee.GetEmployees().GroupBy(e=>e.Department).Select(a=>new {Total_Salary= a.Sum(e=>e.Salary)});
             foreach (var emp in gb)
             {
-                Console.WriteLine($" Salary : {emp.Total_Salary} ");
+                Console.WriteLine($"Total Salary : {emp.Total_Salary} ");
+            }
+
+            var ob = Employee.GetEmployees().GroupBy(e=>e.Department).Select(a=>new { Total_Salary= a.Sum(e=>e.Salary)}).OrderByDescending(a=>a.Total_Salary);
+            foreach (var emp in ob)
+            {
+                Console.WriteLine($"Total Salary (Desc) : {emp.Total_Salary} ");
+            }
+
+            //var cn = Employee.GetEmployees().GroupBy(e=>e.Department).Select(a=>new { First_Name = a.First_Name, Total_Salary= a.Sum(e=>e.Salary)}).Count(a=>a.First_Name).OrderByDescending(a=>a.Total_Salary);
+            //foreach (var emp in cn)
+            //{
+            //   Console.WriteLine($"Total Salary (Department) : {emp.Total_Salary} ");
+            //}
+
+            var avg = Employee.GetEmployees().GroupBy(e=>e.Department).Select(a=>new { Avg_Salary= a.Average(e=>e.Salary)}).OrderBy(a=>a.Avg_Salary);
+            foreach (var emp in avg)
+            {
+                Console.WriteLine($"Average Salary (Department) : {emp.Avg_Salary} ");
+            }
+
+            var max = Employee.GetEmployees().GroupBy(e=>e.Department).Select(a=>new { Max_Salary= a.Max(e=>e.Salary)}).OrderBy(a=>a.Max_Salary);
+            foreach (var emp in max)
+            {
+                Console.WriteLine($"Maximum Salary (Department) : {emp.Max_Salary} ");
+            }
+
+            var min = Employee.GetEmployees().GroupBy(e=>e.Department).Select(a=>new { Min_Salary= a.Min(e=>e.Salary)}).OrderBy(a=>a.Min_Salary);
+            foreach (var emp in min)
+            {
+                Console.WriteLine($"Minimum Salary (Department) : {emp.Min_Salary} ");
             }
 
             var top = Employee.GetEmployees().OrderByDescending(e => e.Salary).Take(2).ToList();
             foreach (var emp in top)
             {
-                Console.WriteLine($"Salary : {emp.Salary} ");
+                Console.WriteLine($"Top 2 Salary : {emp.Salary} ");
             }
 
             var topn = Employee.GetEmployees().OrderByDescending(e => e.Salary).Take(5).ToList();
             foreach (var emp in topn)
             {
-                Console.WriteLine($"Salary : {emp.Salary} ");
+                Console.WriteLine($"Top 5 Salary : {emp.Salary} ");
             }
 
             var top2 = Employee.GetEmployees().OrderByDescending(e => e.Salary).Skip(1).First();
-            foreach (var emp in top2)
-            {
-                Console.WriteLine($"Salary : {emp.Salary} ");
-            }
-
+            Console.WriteLine($"2nd Highest Salary : {top2.Salary} ");
+            
             var un = Employee.GetEmployees().Select(x => x.First_Name).Union(Employee.GetEmployees().Select(y => y.Last_Name)).ToList();
             foreach (var emp in un)
             {
                 Console.WriteLine($"Name : {emp} ");
             }
+
+            var ei = Employee.GetEmployees().Select(x => x.Employee_Id).Except(Incentive.GetIncentives().Select(y => y.Employee_Ref_Id)).ToList();
+            foreach (var emp in ei)
+            {
+                Console.WriteLine($"Emp Id : {emp} ");
+            }
+
+            //var cases = Employee.GetEmployees().Select(e => new {First_Name = e.First_Name, First_Name = e.First_Name=="John"?e.Salary*.2:e.First_Name =="Roy"?e.Salary*.1:e.First_Name != null ? e.Salary*.15:"-"}).ToList();
+            //foreach (var emp in cases)
+            //{
+            //    Console.WriteLine($"Emp Details : {emp} ");
+            //}
+
+            var cases2 = Employee.GetEmployees().Select(e => new {Department = e.Department=="Banking"?"Bank Dept":e.Department =="Insurance"?"Insurance Dept":e.Department=="Services"?"Services Dept":"-"});
+            foreach (var emp in cases2)
+            {
+                Console.WriteLine($"Emp Details : {emp.Department} ");
+            }
+
 
 
             Console.ReadKey();
